@@ -1,19 +1,42 @@
-import { Link, Outlet } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import "./App.css";
+import App from "./App";
 
-function App() {
-  return (
-    <>
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-      </nav>
-      <main>
-        <Outlet />
-      </main>
-    </>
+// page components
+
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Article from "./pages/Article";
+
+// router creation
+
+const router = createBrowserRouter([
+  {
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/articles/:id",
+        element: <Article />,
+      },
+    ],
+  },
+]);
+
+// rendering
+
+const rootElement = document.getElementById("root");
+
+if (rootElement != null) {
+  ReactDOM.createRoot(rootElement).render(
+    <RouterProvider router={router} />
   );
 }
-
-export default App;
